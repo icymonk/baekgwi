@@ -90,9 +90,17 @@ docs/
 
 | 대상 | 방법 |
 |---|---|
-| 웹 미리보기 | CI가 `develop`에 머지될 때마다 웹(HTML5, 싱글 스레드) 빌드를 만들어 배포. 브라우저로 바로 해 볼 수 있음 |
+| 웹 미리보기 | CI가 `develop`에 머지될 때마다 웹(HTML5, 싱글 스레드) 빌드를 만들어 Firebase Hosting에 배포. 브라우저로 바로 해 볼 수 있음 |
 | Windows | CI에서 export, 아티팩트로 내려받기 |
 | Steam | 출시 단계에서 GodotSteam 애드온 + steamcmd 업로드. 계정 정보는 GitHub repo secret |
+
+### 8.1 웹 미리보기 호스팅
+
+- Firebase 프로젝트 `minthold-preview`는 **여러 게임의 미리보기를 함께 올리는 곳**이다.
+- Hosting은 배포할 때 사이트 전체를 덮어쓴다. 그래서 게임마다 **사이트를 따로** 만든다. 이 게임은 `minthold-baekgwi` → https://minthold-baekgwi.web.app
+- 다른 게임도 같은 규칙으로 `minthold-<코드명>` 사이트를 쓴다.
+- 배포 키: GitHub repo secret `FIREBASE_SERVICE_ACCOUNT`. 서비스 계정 역할은 Firebase Hosting Admin.
+- Godot 웹 빌드는 스레드를 끈 싱글 스레드 export다. 그래서 COOP/COEP 헤더가 필요 없다.
 
 - 기준 해상도는 **1920×1080**이다. Steam Deck(1280×800, 16:10)에서는 위아래 여백만 늘어나도록 `canvas_items` + `expand`로 맞춘다.
 - 입력은 마우스 드래그 기준이다. 모든 조작에 컨트롤러 대응(포커스 이동 + 집기/놓기 버튼)을 함께 만든다.
